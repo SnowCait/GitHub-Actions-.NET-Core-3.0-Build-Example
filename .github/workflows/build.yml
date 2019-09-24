@@ -1,0 +1,16 @@
+name: Build .NET Core 3.0
+on: push
+jobs:
+  build:
+    runs-on: macOS-latest # ubuntu-latest, windows-latest, etc
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-dotnet@v1.0.2 # >= v1.1.0 だと dotnet run に失敗する
+        with:
+          dotnet-version: 3.0.100
+      - run: dotnet build --configuration Release
+      - run: dotnet run --configuration Release --project ./GitHub-Actions-.NET-Core-3.0-Build-Example/
+      - uses: actions/upload-artifact@v1
+        with:
+          name: artifact
+          path: ./GitHub-Actions-.NET-Core-3.0-Build-Example/bin/Release/netcoreapp3.0/
